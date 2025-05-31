@@ -8,6 +8,7 @@ IMG_SIZE = (1280, 720)
 ATTN_MASK_FILL = -1e38 # -1e-9  #
 
 FPS = 25 
+# FRAME_INTERVAL = 1/25
 
 ORIGINAL_IMG_SHAPE = (720, 1280, 3)  # (h, w, c)
 FACE_IMG_SHAPE = (160, 160)
@@ -18,10 +19,10 @@ FACE_IMG_SHAPE = (160, 160)
 class VisualTasks:
 	# PureData = 'PureData'  # pure vcap data
 	VQA = 'VQA'     # TODO str or int?
-	VideoRecognition = 'VideoRec'
+	VideoRecognition = 'VideoRecognition'
 	VideoRecogPoseGen = 'VideoRecPoseGen'  # video recognition with pose generation
-	FaceRecognition = 'FaceRec'
-	EmotionImitation = 'EmoImitation' 
+	FaceRecognition = 'FaceRecognition'
+	EmotionImitation = 'EmotionImitation' 
 	FallDetection = 'FallDetection'  # experimental
 
 class MultimodalTasks:
