@@ -46,11 +46,11 @@ log = logging.getLogger(__name__)
 }
 '''
 
-ip = '10.6.36.39'   # dynamic ip of the robot
-face_detect_addr = f'tcp://{ip}:6666'   # face detection result from Ameca
-vsub_addr = f'tcp://{ip}:5000'  # From Ameca, 5000: mjpeg
-vtask_deal_addr = f'tcp://{ip}:2017' #'tcp://10.126.110.67:2006'
-# vsub_mjpeg_addr = f'tcp://{ip}:5000'  # mjpeg From Ameca
+# ip = '10.6.36.39'   # dynamic ip of the robot
+# # face_detect_addr = f'tcp://{ip}:6666'   # face detection result from Ameca
+# vsub_addr = f'tcp://{ip}:5000'  # From Ameca, 5000: mjpeg
+# vtask_deal_addr = f'tcp://{ip}:2017' #'tcp://10.126.110.67:2006'
+# # vsub_mjpeg_addr = f'tcp://{ip}:5000'  # mjpeg From Ameca
 
 
 ctx = Context.instance()
@@ -139,21 +139,16 @@ class SubRouter:
 		self.sub_sock.setsockopt(zmq.SUBSCRIBE, b'')
 		self.sub_sock.setsockopt(zmq.CONFLATE, 1)
 
-		self.face_detect_sub_sock = ctx.socket(zmq.SUB)
-		self.face_detect_sub_sock.setsockopt(zmq.SUBSCRIBE, b'')
+		# self.face_detect_sub_sock = ctx.socket(zmq.SUB)
+		# self.face_detect_sub_sock.setsockopt(zmq.SUBSCRIBE, b'')
 		# self.face_detect_sub_sock.setsockopt(zmq.CONFLATE, 1)  # do not use this flag, which will cause data loss
 
 		try:
-			self.sub_sock.connect(vsub_addr)
+			self.sub_sock.connect()
 		except Exception as e:
 			print('Check the ip of Ameca first!!!!')
 			print('============================')
 			print(str(e))
-		try:
-			self.face_detect_sub_sock.connect(face_detect_addr)
-		except Exception as e:
-			print(str(e))
-			print('===='*3)
 		# self.sub_sock.bind(vsub_addr)
 
 		# context = zmq.Context.instance()
@@ -162,7 +157,7 @@ class SubRouter:
 		# self.sub_sock_sync.setsockopt(zmq.SUBSCRIBE, b'')
 
 		self.router_sock = ctx.socket(zmq.ROUTER)
-		self.router_sock.connect(vtask_deal_addr)
+		self.router_sock.connect(TASK_DEALER_ADDR)
 		# self.router_sock.bind(vtask_deal_addr)
 
 

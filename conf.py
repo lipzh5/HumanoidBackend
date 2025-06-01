@@ -2,6 +2,14 @@
 # @Author: Peizhen Li
 # @Desc: None
 
+# =====IP address=========
+IP_ROBOT = '10.6.36.39'   # dynamic ip of the robot
+# # face_detect_addr = f'tcp://{ip}:6666'   # face detection result from Ameca
+VSUB_ADDR = f'tcp://{IP_ROBOT}:5000'  # From Ameca, 5000: mjpeg
+TASK_DEALER_ADDR = f'tcp://{IP_ROBOT}:2017' #'tcp://10.126.110.67:2006'
+# # vsub_mjpeg_addr = f'tcp://{ip}:5000'  # mjpeg From Ameca
+# =========================
+
 DEBUG = False  # whether in debug mode or not
 FRAME_BUFF_MAX_LEN = 640
 
