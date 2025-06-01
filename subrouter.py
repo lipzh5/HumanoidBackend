@@ -144,7 +144,7 @@ class SubRouter:
 		# self.face_detect_sub_sock.setsockopt(zmq.CONFLATE, 1)  # do not use this flag, which will cause data loss
 
 		try:
-			self.sub_sock.connect()
+			self.sub_sock.connect(VSUB_ADDR)
 		except Exception as e:
 			print('Check the ip of Ameca first!!!!')
 			print('============================')
