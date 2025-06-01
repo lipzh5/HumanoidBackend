@@ -1,5 +1,5 @@
 *.pyc
-/Assets/
+# /Assets/
 *.xml
 /.idea/
 /Utils/openai_key.txt
