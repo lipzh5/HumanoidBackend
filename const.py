@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 # @Author: Peizhen Li
 # @Desc: None
+import os.path as osp
 
 ENCODING = 'utf-8'
 
@@ -59,24 +60,33 @@ EMOTION_TO_ANIM = {
 	Emotions.Neutral: ['Chat Expressions.dir/Chat_G2_Neutral.project',],
 	Emotions.Surprise: [
 		'Chat Expressions.dir/Chat_G2_Surprised_1.project',
-		'Chat Expressions.dir/Chat_G2_Surprised_2.project',],
+		'Chat Expressions.dir/Chat_G2_Surprised_2.project',
+		'Chat Expressions.dir/Chat_G2_Surprised_3.project',
+		],
 	Emotions.Fear: [
 		'Chat Expressions.dir/Chat_G2_Fear_1.project',
-		'Chat Expressions.dir/Chat_G2_Fear_2.project',],
+		'Chat Expressions.dir/Chat_G2_Fear_2.project',
+		'Chat Expressions.dir/Chat_G2_Fear_3.project'
+		],
 	
 	Emotions.Sadness: [
 		'Chat Expressions.dir/Chat_G2_Sad_1.project',
-		'Chat Expressions.dir/Chat_G2_Sad_2.project',],
+		'Chat Expressions.dir/Chat_G2_Sad_2.project',
+		'Chat Expressions.dir/Chat_G2_Sad_3.project',
+		],
 	
 	Emotions.Joy: [
 		'Chat Expressions.dir/Chat_G2_Happy_1.project',
 		'Chat Expressions.dir/Chat_G2_Happy_2.project',
+		'Chat Expressions.dir/Chat_G2_Happy_3.project',
 		# 'Chat Expressions.dir/Chat_G2_Happy_with_audio.project',
 		],
 	
 	Emotions.Disgust: [
 		'Chat Expressions.dir/Chat_G2_Dislike_1.project',
-		'Chat Expressions.dir/Chat_G2_Dislike_2.project',],
+		'Chat Expressions.dir/Chat_G2_Dislike_2.project',
+		'Chat Expressions.dir/Chat_G2_Dislike_3.project'
+		],
 
 	Emotions.Anger: [
 		'Chat Expressions.dir/Chat_G2_Angry_1.project',
@@ -84,5 +94,6 @@ EMOTION_TO_ANIM = {
 		'Chat Expressions.dir/Chat_G2_Angry_3.project',],
 
 }
+EMOTION_TO_ANIM = {emo: [osp.join('Animations.dir/System.dir', anim) for anim in anim_list] for emo, anim_list in EMOTION_TO_ANIM.items()}
 
 
