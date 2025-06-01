@@ -6,7 +6,7 @@ os.environ['TOKENIZERS_PARALLELISM']='false'
 os.environ["TORCH_DISTRIBUTED_DEBUG"] = "DETAIL"
 
 import asyncio
-from AmecaSubRouter import SubRouter
+from subrouter import SubRouter
 
 
 async def run_sub_router():
@@ -15,7 +15,6 @@ async def run_sub_router():
 	
 	task1 = loop.create_task(sub_router.sub_vcap_data())
 	task2 = loop.create_task(sub_router.route_visual_task())
-	# task3 = loop.create_task(sub_router.sub_face_detect_data())
 	await asyncio.gather(task1, task2)
 
 

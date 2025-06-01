@@ -1,0 +1,103 @@
+
+trial: 0  # id for recording multiple runs
+do_eval: False
+device_id: [0]
+training_dataset: meld  
+
+cwd: ${hydra:runtime.cwd}
+seed: 1111
+data:
+  num_labels: 7
+  vision_feature_dim: 512  
+  context_max_len: 256  
+  context_pad_value: 1    
+  vision_utt_max_len: 100
+  transform:
+    mean: [ 0.5, 0.5, 0.5 ]
+    std: [ 0.5, 0.5, 0.5 ]
+    color_jitter:
+      brightness: 0.5
+      contrast: 0.5
+      saturation: 0.5
+      hue: 0.5
+    resize:
+      target_size: 160
+
+dataset:
+  anno_csv_path: ${cwd}/../common/data/meld
+  data_load_path: ${dataset.anno_csv_path}/preprocessed_data
+  text_path: ${dataset.data_load_path}/text
+  meld:
+    anno_csv_path: ${cwd}/../common/data/meld
+    video_dir: ${dataset.anno_csv_path}/raw/MELD.Raw
+    emotion_vocab_path: ${dataset.anno_csv_path}/meld_vocab.pkl
+    neutral_face_path: ${dataset.anno_csv_path}/preprocessed_data/neutral_faces
+    
+model:
+  text_encoder:
+    pretrained_path: 'princeton-nlp/sup-simcse-roberta-large'
+    embed_dim: 1024
+    pad_value: 1
+    mask_value: 2
+  
+  vision_encoder:
+    pretrained_path: ''
+    model_name: 'inceptionresnetv1' # or resnet50
+    use_webface_pretrain: True
+
+
+  transformers:
+    hidden_size: 768
+    self_attn_transformer:
+      num_transformer_layers:
+        # audio: 5
+        vision: 2
+#      hidden_size: 768
+      num_attn_heads: 12
+      intermediate_size: 3072
+      hidden_activation: gelu
+      hidden_dropout_prob: 0.1
+      attn_probs_dropout_prob: 0.1
+      layer_norm_eps: 1e-12
+      initializer_range: 0.02
+
+    cross_modal_transformer:
+      text_vision:
+        num_transformer_layers: 2
+        num_attn_heads: 12
+        attn_dropout: 0.1
+     
+
+train:
+  vle_model_name: vle_model.pth 
+  save_model: False
+  
+  use_faceseq160: False
+  vfeat_neutral_norm: 0
+  vfeat_no_face_ext: 0   # use raw frames, rather than extracted face image
+  num_workers: 16
+  resnet_trainable: True
+  num_epochs: 20
+  batch_size: 16
+  accumulation_steps: 1
+  lr: 4e-7 # 4.5e-7
+  weight_decay: 0.05
+  warm_up: 0.02 # 0.1
+  gradient_clip_value: 10   # 5: ref to SPCL , 10: ref to TelME , 0.8: ref to FacialMMT
+  log_interval: 100
+  # aux_log_interval: 100
+  save_model_path: ./../common/models/pretrained_model/vle_model_n1_acc2.pth
+
+
+
+
+
+
+
+
+
+
+
+
+
+
