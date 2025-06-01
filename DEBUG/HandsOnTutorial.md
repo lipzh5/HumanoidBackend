@@ -4,7 +4,7 @@
 1. **Code structure**
     - Developer directories: Dev/Peizhen, Dev/Xu, Dev/Filippo, etc.
     - Avoid modifying scripts outside your own folder.
-    - Reuse modules using **relative imports**.
+    - Reuse modules using **relative imports**: ```CONST = system.import_library("../../const.py")```
 
 2. **Entry points** 
     - Key scripts: ```HB3/Chat_Controller.py``` , ```HB3/HB3_Controller.py```.
@@ -13,7 +13,7 @@
 
 3. **Activity Class Usage**
     - Focus on lifecycle methods: ```on_start```, ```on_stop```, ```on_tick```.
-    - **Do not** import scripts that define an ```Activity``` class directly
+    - **Do not** import scripts that define an ```Activity``` class directly.
 
 4. **Version Control & Auto-Reload**
     - Every "Save" action commits changes to the Git repo and reloads scripts.
@@ -26,7 +26,7 @@
 
 
 6. **Robot's Dynamic IP Address**
-    - Navigate to **System->Hosts->Address**. (TODO screenshot)
+    - Navigate to **System->Hosts->Address**.
     - Required for establishing a connection to the robot.
 
 7. **Facial Expression Interfaces**
@@ -40,11 +40,26 @@
 
     - Use ```async/await``` where appropriate.
 
-    - 📖 *Recommended reading:* Python coroutines (TODO: Add link)
+    - 📖 *Recommended reading:* [Python coroutines](https://realpython.com/async-io-python/).
 
 9. **Event System**
-    - Used for communication between scripts
-    - (TODO: Add code examples or documentation link)
+    - Used for communication between script activities.
+    - Sending:
+        ```
+        from time import time
+        clock_evt = system.event("talking_clock")
+        class Activity:
+            @system.tick(fps=0.5)
+            def on_tick(self):
+                clock_evt.emit(f"The time is now {time()}s since the start of 1970")
+        ```
+    - Receiving:
+        ```
+        class Activity:
+            @system.on_event("talking_clock")
+            def on_clock_talk(self, message):
+                print("Got Message: ", repr(message))
+        ```
 
 10. **Example: Custom Function Calls**
     - See: ```Scripts/Dev/Peizhen/Chat.py``` for adding your own function calls.
@@ -70,14 +85,6 @@
     - Fine-grained control
     - Hierarchical structure: device → control → pose → animation
 
-
-
-<!-- 13. How to dispatch function calls according to user specification? LLM tool call , how to trigger custom functions?/ event system (event.post) GPT func calls (lib/llm/function_parser.py)->trigger event (take aways: old/new event systems) -->
-<!-- 14. Example of how to add your own function call 
-15. Fine-grained control: demands/parameters (Customise your own control) -->
-<!-- 16. Consumer/Producer design pattern (decorators/singleton)  -->
-
-<!-- ## regulation: Peer review (TODO) -->
 ## ✅ Rules for Teamwork Development with Ameca
 To ensure smooth collaboration and maintain a clean development environment, please follow these guidelines:
 
